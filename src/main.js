@@ -11,8 +11,10 @@ import Vuelidate from 'vuelidate';
 import VueSweetalert2 from 'vue-sweetalert2'
 import BootstrapVue from "bootstrap-vue";
 import Axios from "axios";
+import saveAs from 'file-saver';
+import jspdf from 'jspdf';
 
-Vue.use(Vuelidate, Axios, BootstrapVue, VueSweetalert2)
+Vue.use(Vuelidate, Axios, BootstrapVue, VueSweetalert2, saveAs, jspdf)
 Vue.config.productionTip = false;
 
 new Vue({

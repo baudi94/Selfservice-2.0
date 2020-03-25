@@ -28,7 +28,7 @@
   </div>
   
   
-  <button type="submit" class="btn btn-outline-secondary"  @click.prevent="submitted(userData, test)">Weiter</button>
+  <button type="submit" class="btn btn-outline-secondary"  @click.prevent="submitted(userData)">Weiter</button>
 </form>
   </b-modal>
 </div>
@@ -39,6 +39,8 @@
 <script>
 //import { required } from "vuelidate/lib/validators";
 import axios from 'axios';
+import FileSaver from 'file-saver';
+import jspdf from 'jspdf';
 
 export default {
   name: 'CheckIn',
@@ -50,24 +52,53 @@ export default {
           organisation: '',
          
         },
-        test: '',
+        
         
 
       }
     },
     methods: {
-        submitted(userData, test){
+        submitted(userData){
           
-          axios.get("http://localhost:1080/belos.vrm/rest/selfservice/print?firstname=" + userData.firstname + "&lastname=" + userData.lastname).then(response => {
-            console.log("Daten: " , response.data)
-            console.log(userData)
-            console.log(test)
-            this.test = response.data
-            console.log = ("test: " + this.test)
-          })
-            return this.test
-        }
+          axios.post("http://localhost:1080/belos.vrm/rest/selfservice/print?firstname=" + userData.firstname + "&lastname=" + userData.lastname, {
+            responseType: 'arraybuffer',
+            headers: {
+              'Accept': 'application/pdf'
+            }
+            })
+            .then(response => {
+
+              //Zusammenstellen PDF
+              
+                var obj = document.createElement('object');
+                obj.style.width = '100%';
+                obj.style.height = '842pt';
+                obj.type = 'application/pdf';
+                obj.data = 'data:application/pdf;base64,' + response.data;                
+                
+               //Zusammenstellen File
+
+                var link = document.createElement('a');
+                link.setAttribute('download', obj)
+                link.innerHTML = 'Download PDF file';
+                link.download = 'file.pdf';
+                link.href = 'data:application/octet-stream;base64,' + response.data;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link)
+
+                this.$refs.modal1.hide()
+
+               
+                        
+                })        
+                
+              },
+
+        
+        
     },
+    
     
     computed: {
     console: () => console,
