@@ -47,21 +47,24 @@
        
   </div>
 
-  <div class="form-group">
-    
-     <vue-bootstrap-typeahead
-    :data="users"
+<div>
+  <label for="users1">Ansprechpartner</label>
+  <vue-bootstrap-typeahead
+    class="mb-4"
     v-model="query"
-    :serializer="s => s.text"
-    placeholder="Bitte Kontakt eingeben"
-    @hit="selectedUsers = $event"
+    :data="users"
+    :serializer="item => item.fullname"
+    @hit="selectedUser = $event"
+    placeholder="Ansprechpartner suchen"
+    id="users1"
   />
 
-  </div>
-  <vue-bootstrap-typeahead 
-  v-model="query"
-  :data="['Daniel Bauer', 'Sergej Schloss', 'Nächste Kontakt']"
-/>
+ <h3>Selected User JSON</h3>
+ <pre>{{ selectedUser | stringify }}</pre>
+</div>
+
+
+
   <button class="btn btn-outline-secondary"  @click.prevent="back1()">zurück</button>
   <button type="submit" class="btn btn-outline-info"  @click.prevent="submitted2()">Weiter</button>
     </form>
@@ -73,8 +76,6 @@
 //import axios from 'axios';
 //import swal from 'vue-sweetalert2';
 //import VAutosuggest from 'v-autosuggest'
-import _ from 'underscore'
-
 export default {
    
   data() {
@@ -86,33 +87,35 @@ export default {
          
         },
         users: [],
-        users1: [],
-        userSearch: '',
-        selectedUsers: null,
-        
-
-        
+        search: '',
+        query: '',
+        selectedUser: null,
         
 
       }
     },
+    watch: {
+    // When the query value changes, fetch new results from
+     query(newQuery) {
+      axios.get(`http://localhost:1080/belos.vrm/rest/selfservice/usersquery?name=${newQuery}`)
+        .then((res) => {
+          console.log(res.data)
+          this.users = res.data
+        })
+    }
+  },
+  filters: {
+    stringify(value) {
+      return JSON.stringify(value, null, 2)
+    }
+  },
     methods: {
       submitted(userData, users){
         var data1 = []
         console.log("hier")
         this.$refs.modal3.show()
         this.$refs.modal2.hide()
-        axios.get("http://localhost:1080/belos.vrm/rest/selfservice/users")
-            .then(response => {
-               console.log("responsedata", response.data)
-               for(var i in response.data)
-               data1.push([i, response.data [i]]);
-               
-               console.log("data1", data1)
-              return 
-                })  
-        users = data1
-        console.log("users", users)
+                // console.log("users", users)
         return users
       },
 
@@ -125,13 +128,7 @@ export default {
         this.$refs.modal2.show()
       },
 
-      async getUsers(query) {
-      const res = await fetch(API_URL.replace(':query', query))
-      const suggestions = await res.json()
-      this.users = suggestions.suggestions
-    },
       
-
     }
 
 }
