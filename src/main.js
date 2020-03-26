@@ -11,11 +11,12 @@ import Vuelidate from 'vuelidate';
 import VueSweetalert2 from 'vue-sweetalert2'
 import BootstrapVue from "bootstrap-vue";
 import Axios from "axios";
-import saveAs from 'file-saver';
-import jspdf from 'jspdf';
+import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 
-Vue.use(Vuelidate, Axios, BootstrapVue, VueSweetalert2, saveAs, jspdf)
+
+Vue.use(Vuelidate, Axios, BootstrapVue, VueSweetalert2, VueBootstrapTypeahead)
 Vue.config.productionTip = false;
+Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 
 new Vue({
   router,

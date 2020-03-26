@@ -44,9 +44,24 @@
     <label for="reason">Grund des Besuchs</label>
     <input type="text" class="form-control" id="reason" placeholder="Grund des Besuchs">
 
-    
-    
+       
   </div>
+
+  <div class="form-group">
+    
+     <vue-bootstrap-typeahead
+    :data="users"
+    v-model="query"
+    :serializer="s => s.text"
+    placeholder="Bitte Kontakt eingeben"
+    @hit="selectedUsers = $event"
+  />
+
+  </div>
+  <vue-bootstrap-typeahead 
+  v-model="query"
+  :data="['Daniel Bauer', 'Sergej Schloss', 'Nächste Kontakt']"
+/>
   <button class="btn btn-outline-secondary"  @click.prevent="back1()">zurück</button>
   <button type="submit" class="btn btn-outline-info"  @click.prevent="submitted2()">Weiter</button>
     </form>
@@ -57,7 +72,11 @@
 //import { required, email } from "vuelidate/lib/validators";
 //import axios from 'axios';
 //import swal from 'vue-sweetalert2';
+//import VAutosuggest from 'v-autosuggest'
+import _ from 'underscore'
+
 export default {
+   
   data() {
       return {
          userData: {
@@ -66,26 +85,52 @@ export default {
           organisation: '',
          
         },
+        users: [],
+        users1: [],
+        userSearch: '',
+        selectedUsers: null,
+        
+
         
         
 
       }
     },
     methods: {
-      submitted(userData){
+      submitted(userData, users){
+        var data1 = []
         console.log("hier")
         this.$refs.modal3.show()
         this.$refs.modal2.hide()
+        axios.get("http://localhost:1080/belos.vrm/rest/selfservice/users")
+            .then(response => {
+               console.log("responsedata", response.data)
+               for(var i in response.data)
+               data1.push([i, response.data [i]]);
+               
+               console.log("data1", data1)
+              return 
+                })  
+        users = data1
+        console.log("users", users)
+        return users
       },
 
       submitted2(){
-        console.log("hier2")
+         
       },
 
       back1(){
         this.$refs.modal3.hide()
         this.$refs.modal2.show()
-      }
+      },
+
+      async getUsers(query) {
+      const res = await fetch(API_URL.replace(':query', query))
+      const suggestions = await res.json()
+      this.users = suggestions.suggestions
+    },
+      
 
     }
 
@@ -105,4 +150,5 @@ export default {
 .error{
   color: red;
 }
+
 </style>

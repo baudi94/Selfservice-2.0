@@ -25,6 +25,7 @@ import TopBar from './components/TopBar';
 import Register from './components/Register';
 import CheckIn from './components/CheckIn';
 
+
 export default {
   name: 'App',
 
@@ -32,7 +33,8 @@ export default {
     
     TopBar,
     Register,
-    CheckIn
+    CheckIn,
+  
   },
 
   data: () => ({
