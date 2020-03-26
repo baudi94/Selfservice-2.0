@@ -43,7 +43,7 @@ import FileSaver from 'file-saver';
 import jspdf from 'jspdf';
 
 export default {
-  name: 'CheckIn',
+  
     data() {
       return {
          userData: {
