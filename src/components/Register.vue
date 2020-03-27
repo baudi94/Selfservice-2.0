@@ -11,27 +11,44 @@
 
 
     <b-modal id="modal-2" title="Registrieren" ref="modal2" :hide-footer="true">
-        <form>
-      <div class="form-group">
-        <label for="firstname">Vorname</label>
-        <input type="text" class="form-control" id="firstname" placeholder="Vorname"  v-model="userData.firstname" >
-        
-      </div>
-      <div class="form-group">
-        <label for="lastname">Nachname</label>
-        <input type="text" class="form-control" id="lastname" placeholder="Nachname" v-model="userData.lastname">
+      <form>
+        <div class="form-group">
+          <label for="userData.firstname">Vorname</label>
+          <input v-bind:class="{ error: $v.userData.firstname.$error }" class="form-control" type="text" id="userData.firstname" v-model.trim="userData.firstname" placeholder="Vorname" @input="$v.userData.firstname.$touch()">
+          <div v-if="$v.userData.firstname.$dirty">
+            <p class="error-message" v-if="!$v.userData.firstname.required">  Dieses Feld bitte ausfüllen  </p>
+          </div>
+        </div>
       
-      </div>
       <div class="form-group">
-        <label for="company">Firma</label>
-        <input type="text" class="form-control" id="company" placeholder="Firma"  v-model="userData.company">
-       
+        <label for="userData.lastname">Nachname</label>
+        <input v-bind:class="{ error: $v.userData.lastname.$error }" class="form-control" type="text" id="userData.lastname" v-model.trim="userData.lastname" placeholder="Nachname" @input="$v.userData.lastname.$touch()">
+        <div v-if="$v.userData.lastname.$dirty">
+          <p class="error-message" v-if="!$v.userData.lastname.required">    Dieses Feld bitte ausfüllen  </p>
+        </div>
       </div>
-      <div  class="form-group">
-        <label for="email">Email address</label>
-        <input type="email" class="form-control" id="email" placeholder="E-Mail"  v-model="userData.email">
-      
+
+      <div class="form-group">
+        <label for="userData.organisation">Organisation</label>
+        <input v-bind:class="{ error: $v.userData.organisation.$error }" type="text" class="form-control" id="userData.organisation" v-model.trim="userData.organisation" placeholder="Organisation" @input="$v.userData.organisation.$touch()">
+        <div v-if="$v.userData.organisation.$dirty">
+          <p class="error-message" v-if="!$v.userData.organisation.required">    Dieses Feld bitte ausfüllen  </p>
+        </div>
       </div>
+
+      <div class="form-group">
+    <label for="userData.email">E-Mail</label>
+    <input v-bind:class="{ error: $v.userData.email.$error }" type="text" class="form-control" id="userData.email" v-model.trim="userData.email" placeholder="E-Mail" @input="$v.userData.email.$touch()">
+    <div v-if="$v.userData.email.$dirty">
+    <p class="error-message" v-if="!$v.userData.email.email">
+      Bitte korrekte E-Mail eingeben
+    </p>
+    <p class="error-message" v-if="!$v.userData.email.required">
+      Dieses Feld bitte ausfüllen
+    </p>
+  </div>
+  </div>
+     
       
       <button type="submit" class="btn btn-outline-info"  @click.prevent="submitted(userData)">Weiter</button>
     </form>
@@ -41,12 +58,12 @@
   <b-modal id="modal-3" title="Registrieren" ref="modal3" :hide-footer="true">
         <form>
         <div class="form-group">
-          <label for="reason">Grund des Besuchs</label>
-          <input type="text" class="form-control" id="reason" placeholder="Grund des Besuchs">
-
-          
+        <label for="userData.reason">Grund des Besuchs</label>
+        <input v-bind:class="{ error: $v.userData.reason.$error }" type="text" class="form-control" id="userData.reason" v-model.trim="userData.reason" placeholder="Grund des Besuchs" @input="$v.userData.reason.$touch()">
+        <div v-if="$v.userData.reason.$dirty">
+          <p class="error-message" v-if="!$v.userData.reason.required">    Dieses Feld bitte ausfüllen  </p>
         </div>
-
+        </div>
         <div>
           <label for="users1">Ansprechpartner</label>
             <vue-bootstrap-typeahead
@@ -59,9 +76,13 @@
               id="users1"
             />
 
-          <h3>Selected User JSON</h3>
+           
+            
+
+          <h4>Ausgewählter Ansprechpartner: </h4>
           <pre>{{ selectedUser | stringify }}</pre>
         </div>
+        
 
 
 
@@ -105,9 +126,10 @@ Die Unterweisung muss an die Gefährdungsentwicklung angepasst sein und erforder
 </template>
 <script>
 //import { required, email } from "vuelidate/lib/validators";
-//import axios from 'axios';
+import axios from 'axios';
 //import swal from 'vue-sweetalert2';
 //import VAutosuggest from 'v-autosuggest'
+import { required, email } from "vuelidate/lib/validators";
 export default {
    
   data() {
@@ -116,6 +138,7 @@ export default {
           firstname: '',
           lastname: '',
           organisation: '',
+          reason: '',
          
         },
         users: [],
@@ -123,7 +146,7 @@ export default {
         query: '',
         selectedUser: null,
         status: 'not accepted',
-        
+        reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 
 
       }
     },
@@ -144,12 +167,20 @@ export default {
   },
     methods: {
       submitted(userData, users){
-       
+        if(userData.firstname === '' || userData.lastname === '' || userData.organisation === '' || userData.email === ''){
+
+           alert("bitte alle Felder ausfüllen")
+         }
         
+           else if(this.reg.test(this.userData.email) === false){
+          alert('korrekte email eingeben')
+        }
+        else{
         this.$refs.modal3.show()
         this.$refs.modal2.hide()
         // console.log("users", users)
         return users
+        }
       },
 
       submitted2(){
@@ -184,7 +215,27 @@ export default {
         this.$refs.modal3.show()
       },
       
-    }
+    },
+     validations: {
+      userData: {
+        firstname: {
+          required,
+          },
+        lastname: {
+          required,
+        },
+        organisation: {
+          required,
+        },
+        email: {
+          required,
+          email,
+        },
+        reason: {
+          required,
+        }
+      }
+    },
 
 }
 </script>
@@ -199,8 +250,12 @@ export default {
    
 }  
 
-.error{
-  color: red;
-}
+.error-message {
+   color: red;
+ }
+
+.error {
+    border: 1px solid red;
+  }
 
 </style>
