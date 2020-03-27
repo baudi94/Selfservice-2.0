@@ -12,21 +12,30 @@
   <b-modal id="modal-1" title="Anmelden" ref="modal1" :hide-footer="true">
     <form>
   <div class="form-group">
-    <label for="firstname">Vorname</label>
-    <input type="text" class="form-control" id="firstname" v-model="userData.firstname" placeholder="Vorname"  >
-     
+    <label for="userData.firstname">Vorname</label>
+    <input v-bind:class="{ error: $v.userData.firstname.$error }" class="form-control" type="text" id="userData.firstname" v-model.trim="userData.firstname" placeholder="Vorname" @input="$v.userData.firstname.$touch()">
+    <div v-if="$v.userData.firstname.$dirty">
+      <p class="error-message" v-if="!$v.userData.firstname.required">  Dieses Feld bitte ausfüllen  </p>
+    </div>
   </div>
   <div class="form-group">
-    <label for="lastname">Nachname</label>
-    <input type="text" class="form-control" id="lastname" v-model="userData.lastname" placeholder="Nachname">
-    
+    <label for="userData.lastname">Nachname</label>
+    <input v-bind:class="{ error: $v.userData.lastname.$error }" class="form-control" type="text" id="userData.lastname" v-model.trim="userData.lastname" placeholder="Nachname" @input="$v.userData.lastname.$touch()">
+    <div v-if="$v.userData.lastname.$dirty">
+      <p class="error-message" v-if="!$v.userData.lastname.required">    Dieses Feld bitte ausfüllen  </p>
+    </div>
   </div>
+
   <div class="form-group">
-    <label for="organisation">Organisation</label>
-    <input type="text" class="form-control" id="organisation" v-model="userData.organisation" placeholder="organisation">
-    
+    <label for="userData.organisation">Organisation</label>
+    <input v-bind:class="{ error: $v.userData.organisation.$error }" type="text" class="form-control" id="userData.organisation" v-model.trim="userData.organisation" placeholder="Organisation" @input="$v.userData.organisation.$touch()">
+    <div v-if="$v.userData.organisation.$dirty">
+      <p class="error-message" v-if="!$v.userData.organisation.required">    Dieses Feld bitte ausfüllen  </p>
+    </div>
   </div>
-  
+  <div class="validators">
+ 
+</div>
   
   <button type="submit" class="btn btn-outline-secondary"  @click.prevent="submitted(userData)">Weiter</button>
 </form>
@@ -39,10 +48,12 @@
 <script>
 //import { required } from "vuelidate/lib/validators";
 import axios from 'axios';
-import FileSaver from 'file-saver';
-import jspdf from 'jspdf';
+import { required } from "vuelidate/lib/validators";
+import swal from 'vue-sweetalert2';
+
 
 export default {
+  
   
     data() {
       return {
@@ -53,13 +64,17 @@ export default {
          
         },
         
-        
-
       }
     },
+    
     methods: {
         submitted(userData){
-          
+         if(userData.firstname === '' || userData.lastname === '' || userData.organisation === ''){
+
+           alert("bitte alle Felder ausfüllen")
+         }
+         
+          else{
           axios.post("http://localhost:1080/belos.vrm/rest/selfservice/print?firstname=" + userData.firstname + "&lastname=" + userData.lastname, {
             responseType: 'arraybuffer',
             headers: {
@@ -67,9 +82,9 @@ export default {
             }
             })
             .then(response => {
-
+                                
               //Zusammenstellen PDF
-              
+                
                 var obj = document.createElement('object');
                 obj.style.width = '100%';
                 obj.style.height = '842pt';
@@ -84,16 +99,19 @@ export default {
                 link.download = 'file.pdf';
                 link.href = 'data:application/octet-stream;base64,' + response.data;
                 document.body.appendChild(link);
+
+                 
                 link.click();
                 document.body.removeChild(link)
 
+               
                 this.$refs.modal1.hide()
 
-               
+                 
                         
                 })        
-                
-              },
+          }
+        },
 
         
         
@@ -103,6 +121,20 @@ export default {
     computed: {
     console: () => console,
     window: () => window,
+    },
+    validations: {
+      userData: {
+        firstname: {
+          required,
+          },
+        lastname: {
+          required,
+        },
+        organisation: {
+          required,
+        },
+      
+    },
     }
 }
 
@@ -121,7 +153,11 @@ export default {
     
 }
 
-.error{
-  color: red;
-}
+ .error-message {
+   color: red;
+ }
+
+.error {
+    border: 1px solid red;
+  }
 </style>
