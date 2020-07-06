@@ -61,7 +61,9 @@
         <label for="userData.reason">Grund des Besuchs</label>
         <input v-bind:class="{ error: $v.userData.reason.$error }" type="text" class="form-control" id="userData.reason" v-model.trim="userData.reason" placeholder="Grund des Besuchs" @input="$v.userData.reason.$touch()">
         <div v-if="$v.userData.reason.$dirty">
-          <p class="error-message" v-if="!$v.userData.reason.required">    Dieses Feld bitte ausfüllen  </p>
+          <p class="error-message" v-if="!$v.userData.reason.required">    
+            Dieses Feld bitte ausfüllen  
+          </p>
         </div>
         </div>
         <div>
@@ -87,7 +89,7 @@
 
 
         <button class="btn btn-outline-secondary"  @click.prevent="back1()">zurück</button>
-        <button type="submit" class="btn btn-outline-info"  @click.prevent="submitted2(selectedUser)">Weiter</button>
+        <button type="submit" class="btn btn-outline-info"  @click.prevent="submitted2(selectedUser, userData)">Weiter</button>
         </form>
   </b-modal>
 
@@ -183,9 +185,19 @@ export default {
         }
       },
 
-      submitted2(){
-        this.$refs.modal3.hide()
-        this.$refs.modal4.show()
+      submitted2(selectedUser, userData){
+        if(selectedUser === null || selectedUser === '' || userData.reason === null){
+          alert("bitte alle Felder ausfüllen")
+
+          console.log("hier ist ein fehler")
+        }
+        else{
+          this.$refs.modal3.hide()
+          this.$refs.modal4.show()
+          console.log("hier ist kein fehler")
+          return selectedUser
+        }
+        
       },
 
       submitted3(selectedUser, status){
@@ -234,7 +246,9 @@ export default {
         reason: {
           required,
         }
-      }
+      },
+      
+      
     },
 
 }
