@@ -70,12 +70,12 @@ export default {
     methods: {
         submitted(userData){
          if(userData.firstname === '' || userData.lastname === '' || userData.organisation === ''){
-
+           console.log("Feld: " + userData.organisation)
            alert("bitte alle Felder ausfüllen")
          }
          
           else{
-          axios.post("http://localhost:1080/belos.vrm/rest/selfservice/print?firstname=" + userData.firstname + "&lastname=" + userData.lastname, {
+          axios.post("http://localhost:1080/belos.vrm/rest/selfservice/print?firstname=" + userData.firstname + "&lastname=" + userData.lastname + "&organisation=" + userData.organisation, {
             responseType: 'arraybuffer',
             headers: {
               'Accept': 'application/pdf'
