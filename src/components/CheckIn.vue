@@ -37,7 +37,7 @@
  
 </div>
   
-  <button type="submit" class="btn btn-outline-secondary"  @click.prevent="submitted(userData)">Weiter</button>
+  <button type="submit" class="btn btn-success"  @click.prevent="submitted(userData)">Weiter</button>
 </form>
   </b-modal>
 </div>
@@ -63,12 +63,24 @@ export default {
           organisation: '',
          
         },
-        
+        answer: '',
       }
     },
     
     methods: {
-        submitted(userData){
+        submitted(userData, answer){
+         this.answer = axios.post("http://localhost:1080/belos.vrm/rest/selfservice/print?firstname=" + userData.firstname + "&lastname=" + userData.lastname + "&organisation=" + userData.organisation, {
+            responseType: 'arraybuffer',
+            headers: {
+              'Accept': 'application/pdf'
+            }
+            })
+            .then((res) => {
+          console.log(res.data)
+          this.answer = res.data(0)
+           
+        })
+           console.log("Daten:" + this.answer);
          if(userData.firstname === '' || userData.lastname === '' || userData.organisation === ''){
            console.log("Feld: " + userData.organisation)
            alert("bitte alle Felder ausfüllen")
@@ -107,7 +119,8 @@ export default {
                
                 this.$refs.modal1.hide()
 
-                 
+                alert("Vielen Dank, Bitte suchen Sie den Raum auf ihrem Besucherausweis auf.")
+                window. location.reload()
                         
                 })        
           }

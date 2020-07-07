@@ -50,7 +50,7 @@
   </div>
      
       
-      <button type="submit" class="btn btn-outline-info"  @click.prevent="submitted(userData)">Weiter</button>
+      <button type="submit" class="btn btn-success"  @click.prevent="submitted(userData)">Weiter</button>
     </form>
   </b-modal>
   
@@ -88,8 +88,8 @@
 
 
 
-        <button class="btn btn-outline-secondary"  @click.prevent="back1()">zurück</button>
-        <button type="submit" class="btn btn-outline-info"  @click.prevent="submitted2(selectedUser, userData)">Weiter</button>
+        <button class="btn btn-secondary"  @click.prevent="back1()">zurück </button>
+        <button type="submit" class="btn btn-success"  @click.prevent="submitted2(selectedUser, userData)">Weiter</button>
         </form>
   </b-modal>
 
@@ -118,8 +118,8 @@ Die Unterweisung muss an die Gefährdungsentwicklung angepasst sein und erforder
    <!-- <p class="error" v-show="!$v.contact.$model">This field is required</p>-->
   </div>
   
-  <button class="btn btn-outline-secondary"  @click.prevent="back2()">zurück</button>
-  <button type="submit" class="btn btn-outline-info"  @click.prevent="submitted3()">Fertig</button>
+  <button class="btn btn-secondary"  @click.prevent="back2()">zurück </button>
+  <button type="submit" class="btn btn-success"  @click.prevent="submitted3()">Fertig</button>
   
   </b-modal>
 
@@ -258,10 +258,9 @@ export default {
       display:inline-block;
 }
 .card-img-top {
-    width: 80%;
-    height: 80%;
-    object-fit: cover;
-   
+    width: 100%;
+    height: 16.7vw;
+    object-fit: contain;
 }  
 
 .error-message {
