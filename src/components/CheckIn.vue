@@ -69,21 +69,32 @@ export default {
     
     methods: {
         submitted(userData, answer){
-         this.answer = axios.post("http://localhost:1080/belos.vrm/rest/selfservice/print?firstname=" + userData.firstname + "&lastname=" + userData.lastname + "&organisation=" + userData.organisation, {
-            responseType: 'arraybuffer',
-            headers: {
-              'Accept': 'application/pdf'
-            }
-            })
+          axios.get("http://localhost:1080/belos.vrm/rest/selfservice/getstatus?firstname=" + userData.firstname + "&lastname=" + userData.lastname + "&organisation=" + userData.organisation,)
+            .catch(function (error) {
+              if (error.response) {
+                
+              } else if (error.request) {
+               
+              } 
+              
+              alert("Keine Veranstaltung gefunden, bitte registrieren Sie sich.")
+              window. location.reload()
+            });
+         this.answer = axios.get("http://localhost:1080/belos.vrm/rest/selfservice/getstatus?firstname=" + userData.firstname + "&lastname=" + userData.lastname + "&organisation=" + userData.organisation, )
             .then((res) => {
-          console.log(res.data)
-          this.answer = res.data(0)
+          console.log("hier: " + res.data)
+          this.answer = res.data
+           if(this.answer != "registrated" || this.answer === null || this.answer === ""){
+             alert("Sie sind schon eingecheckt, bitte begeben Sie sich zu dem auf Ihrem Ausweis ausgewiesenen Raum")
+
+           }
            
         })
-           console.log("Daten:" + this.answer);
+           
          if(userData.firstname === '' || userData.lastname === '' || userData.organisation === ''){
            console.log("Feld: " + userData.organisation)
-           alert("bitte alle Felder ausfüllen")
+           alert("bitte alle Felder ausfüllen");
+           window. location.reload()
          }
          
           else{
