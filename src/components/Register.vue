@@ -67,7 +67,7 @@
         </div>
         </div>
         <div>
-          <label for="users1">Ansprechpartner</label>
+          <label for="users1">Ansprechpartner mit dem Sie in Kontakt treten möchten</label>
             <vue-bootstrap-typeahead
               class="mb-4"
               v-model="query"
@@ -81,8 +81,9 @@
            
             
 
-          <h4>Ausgewählter Ansprechpartner: </h4>
-          <pre>{{ selectedUser | stringify }}</pre>
+          <p>Ausgewählter Ansprechpartner: </p>
+          <p>{{selectedUser.fullname | stringify}}</p>
+          
         </div>
         
 
@@ -97,7 +98,7 @@
   <b-modal id="modal-4" title="Registrieren" ref="modal4" :hide-footer="true">
    
     <div class="form-group">
-    <label for="contact">Sicherheitsunterweisung</label>
+   <h5><label for="contact">Sicherheitsunterweisung</label></h5>
     <p id="contact">
 Der Arbeitgeber hat nach § 12 Arbeitsschutzgesetz die Beschäftigten über Sicherheit und Gesundheitsschutz bei der Arbeit während ihrer Arbeitszeit ausreichend und angemessen zu unterweisen. 
 Die Unterweisung umfasst Anweisungen und Erläuterungen, die eigens auf den Arbeitsplatz oder den Aufgabenbereich der Beschäftigten ausgerichtet sind. 
@@ -119,7 +120,7 @@ Die Unterweisung muss an die Gefährdungsentwicklung angepasst sein und erforder
   </div>
   
   <button class="btn btn-secondary"  @click.prevent="back2()">zurück </button>
-  <button type="submit" class="btn btn-success"  @click.prevent="submitted3()">Fertig</button>
+  <button type="submit" class="btn btn-success"  @click.prevent="submitted3()">Ansprechpartner anrufen</button>
   
   </b-modal>
 
@@ -146,7 +147,7 @@ export default {
         users: [],
         search: '',
         query: '',
-        selectedUser: null,
+        selectedUser: '',
         status: 'not accepted',
         reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 
 

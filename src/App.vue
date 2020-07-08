@@ -2,18 +2,19 @@
   <v-app>
     <TopBar/>
     <v-content>
-      <div class="row justify-content-md-center">
-      <div class="col-3">
-                 
-          <CheckIn/>
-      
-      </div>
-      <div class="col-3">
-                         
-          <Register/>
-      </div>
-      </div>
-      
+      <v-container fill-height>
+        <v-row justify="center" align="center">
+          
+          
+               
+            <CheckIn/>
+                  
+          
+                       
+            <Register/>
+           
+        </v-row>
+      </v-container>
 
     </v-content>
   </v-app>
@@ -47,11 +48,13 @@ export default {
     display:inline-block;
     display:flex;
     flex-direction:column;
+   
 }
 .card-img-top {
     width: 100%;
     height: 16.7vw;
     object-fit: cover;
+    
     
 }
 </style>
