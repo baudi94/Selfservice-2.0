@@ -3,17 +3,17 @@
     <div class="card" style="width: 25rem;">
         <a v-b-modal.modal-2><img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTlGgXt0vzBAMcUcIG7HfBG7XDmZr3ASyxFHMFQpY16fhvvVADV" alt="Card image cap"></a>
         <div class="card-body">
-          <h5 class="card-title">Registrieren</h5>
-          <p class="card-text">Falls Sie noch bei keiner Veranstaltung hinterlegt sind, registrieren Sie sich bitte.</p>
-        <b-button v-b-modal.modal-2>Registrieren</b-button>
+          <h5 class="card-title">Besuch anmelden</h5>
+          <p class="card-text">Falls Sie noch bei keiner Veranstaltung hinterlegt sind, registrieren Sie sich bitte hier, um mit ihrem Ansprechpartner in Verbindung zu treten.</p>
+        <b-button v-b-modal.modal-2 class="btn btn-success" style="margin: 0 auto; display: block;">Anmelden</b-button>
       </div>
     </div>
 
 
-    <b-modal id="modal-2" title="Registrieren" ref="modal2" :hide-footer="true">
+    <b-modal id="modal-3" title="Anmelden" ref="modal3" :hide-footer="true">
       <form>
         <div class="form-group">
-          <label for="userData.firstname">Vorname</label>
+          <label for="userData.firstname">Vorname*</label>
           <input v-bind:class="{ error: $v.userData.firstname.$error }" class="form-control" type="text" id="userData.firstname" v-model.trim="userData.firstname" placeholder="Vorname" @input="$v.userData.firstname.$touch()">
           <div v-if="$v.userData.firstname.$dirty">
             <p class="error-message" v-if="!$v.userData.firstname.required">  Dieses Feld bitte ausfüllen  </p>
@@ -21,7 +21,7 @@
         </div>
       
       <div class="form-group">
-        <label for="userData.lastname">Nachname</label>
+        <label for="userData.lastname">Nachname*</label>
         <input v-bind:class="{ error: $v.userData.lastname.$error }" class="form-control" type="text" id="userData.lastname" v-model.trim="userData.lastname" placeholder="Nachname" @input="$v.userData.lastname.$touch()">
         <div v-if="$v.userData.lastname.$dirty">
           <p class="error-message" v-if="!$v.userData.lastname.required">    Dieses Feld bitte ausfüllen  </p>
@@ -29,15 +29,13 @@
       </div>
 
       <div class="form-group">
-        <label for="userData.organisation">Organisation</label>
-        <input v-bind:class="{ error: $v.userData.organisation.$error }" type="text" class="form-control" id="userData.organisation" v-model.trim="userData.organisation" placeholder="Organisation" @input="$v.userData.organisation.$touch()">
-        <div v-if="$v.userData.organisation.$dirty">
-          <p class="error-message" v-if="!$v.userData.organisation.required">    Dieses Feld bitte ausfüllen  </p>
-        </div>
+        <label for="userData.organisation">Firma</label>
+        <input  type="text" class="form-control" id="userData.organisation" v-model.trim="userData.organisation" placeholder="Firma" @input="$v.userData.organisation.$touch()">
+        
       </div>
 
       <div class="form-group">
-    <label for="userData.email">E-Mail</label>
+    <label for="userData.email">E-Mail*</label>
     <input v-bind:class="{ error: $v.userData.email.$error }" type="text" class="form-control" id="userData.email" v-model.trim="userData.email" placeholder="E-Mail" @input="$v.userData.email.$touch()">
     <div v-if="$v.userData.email.$dirty">
     <p class="error-message" v-if="!$v.userData.email.email">
@@ -49,17 +47,18 @@
   </div>
   </div>
      
-      
-      <button type="submit" class="btn btn-success"  @click.prevent="submitted(userData)">Weiter</button>
+      <button class="btn btn-secondary"  @click.prevent="back1()">zurück </button>
+      <button type="submit" class="btn btn-success"  @click.prevent="submitted(userData, selectedUser)">Weiter</button>
     </form>
   </b-modal>
   
 <!-- 2. Modal -->
-  <b-modal id="modal-3" title="Registrieren" ref="modal3" :hide-footer="true">
+  <b-modal id="modal-2" title="Anmelden" ref="modal2" :hide-footer="true">
         <form>
         <div class="form-group">
-        <label for="userData.reason">Grund des Besuchs</label>
+        <label for="userData.reason">Grund des Besuchs*</label>
         <input v-bind:class="{ error: $v.userData.reason.$error }" type="text" class="form-control" id="userData.reason" v-model.trim="userData.reason" placeholder="Grund des Besuchs" @input="$v.userData.reason.$touch()">
+        
         <div v-if="$v.userData.reason.$dirty">
           <p class="error-message" v-if="!$v.userData.reason.required">    
             Dieses Feld bitte ausfüllen  
@@ -67,7 +66,7 @@
         </div>
         </div>
         <div>
-          <label for="users1">Ansprechpartner mit dem Sie in Kontakt treten möchten</label>
+          <label for="users1">Ansprechpartner mit dem Sie in Kontakt treten möchten* <img src="https://wiki.jat-online.de/lib/exe/fetch.php?cache=&media=emoticons:lupe.png" width="30" height="30"></label>
             <vue-bootstrap-typeahead
               class="mb-4"
               v-model="query"
@@ -81,21 +80,17 @@
            
             
 
-          <p>Ausgewählter Ansprechpartner: </p>
-          <p>{{selectedUser.fullname | stringify}}</p>
+          <!--<p>Ausgewählter Ansprechpartner: </p> -->
+          <!--<p>{{selectedUser.fullname | stringify}}</p> -->
           
         </div>
-        
-
-
-
-        <button class="btn btn-secondary"  @click.prevent="back1()">zurück </button>
+       
         <button type="submit" class="btn btn-success"  @click.prevent="submitted2(selectedUser, userData)">Weiter</button>
         </form>
   </b-modal>
 
 
-  <b-modal id="modal-4" title="Registrieren" ref="modal4" :hide-footer="true">
+  <b-modal id="modal-4" title="Anmelden" ref="modal4" :hide-footer="true">
    
     <div class="form-group">
    <h5><label for="contact">Sicherheitsunterweisung</label></h5>
@@ -169,18 +164,27 @@ export default {
     }
   },
     methods: {
-      submitted(userData, users){
-        if(userData.firstname === '' || userData.lastname === '' || userData.organisation === '' || userData.email === ''){
+      submitted(userData, users, selectedUser){
+        if(userData.firstname === '' || userData.lastname === '' || userData.email === ''){
 
-           alert("Bitte alle Felder ausfüllen")
+           swal(
+                    'Hinweis!',
+                    'Bitte alle erforderlichen Felder ausfüllen um fortzufahren.',
+                    'info'
+                  );
          }
         
         else if(this.reg.test(this.userData.email) === false){
-          alert('Bitte eine korrekte E-mail Adresse eingeben')
+          swal({
+                  title: "Hinweis!",
+                  text: "Bitte eine korrekte E-Mail Adresse eingeben um fortzufahren.",
+                  icon: "info",
+                  timer: 5000
+                });
         }
         else{
-        this.$refs.modal3.show()
-        this.$refs.modal2.hide()
+        this.$refs.modal4.show()
+        this.$refs.modal3.hide()
         // console.log("users", users)
         return users
         }
@@ -188,13 +192,19 @@ export default {
 
       submitted2(selectedUser, userData){
         if(selectedUser === null || selectedUser === '' || userData.reason === null){
-          alert("Bitte alle Felder ausfüllen")
+         swal({
+                  title: "Hinweis!",
+                  text: "Bitte alle erforderlichen Felder ausfüllen um fortzufahren.",
+                  icon: "info",
+                  timer: 5000
+                });
 
           //console.log("hier ist ein fehler")
         }
         else{
-          this.$refs.modal3.hide()
-          this.$refs.modal4.show()
+          console.log("here")
+          this.$refs.modal2.hide()
+          this.$refs.modal3.show()
           //console.log("hier ist kein fehler")
           return selectedUser
         }
@@ -205,7 +215,12 @@ export default {
         console.log('status', this.status)
       if(this.status != 'accepted'){
           
-          alert('Bitte die Bedingungen akzeptieren')
+          swal({
+                  title: "Achtung!",
+                  text: "Bitte akzeptieren Sie die Bedingungen um fortzufahren.",
+                  icon: "info",
+                  timer: 5000
+                });
         }
 
         else{
@@ -233,9 +248,7 @@ export default {
         lastname: {
           required,
         },
-        organisation: {
-          required,
-        },
+        
         email: {
           required,
           email,

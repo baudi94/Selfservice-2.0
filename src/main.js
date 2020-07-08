@@ -11,22 +11,12 @@ import Vuelidate from 'vuelidate';
 import BootstrapVue from "bootstrap-vue";
 import Axios from "axios";
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
-import VueNotifications from 'vue-notifications';
-import swal from 'sweetalert';
+//import VueNotifications from 'vue-notifications';
+import VueSweetalert2 from 'vue-sweetalert2';
+import VueSwal from 'vue-swal';
 
-function toast ({title, message, type, timeout, cb}) {
-  if (type === VueNotifications.types.warn) type = 'warning'
-  return swal(title, message, type)
-}
 
-const options = {
-  success: toast,
-  error: toast,
-  info: toast,
-  warn: toast
-}
-
-Vue.use(Vuelidate, Axios, BootstrapVue, VueBootstrapTypeahead, VueNotifications, options)
+Vue.use(Vuelidate, Axios, BootstrapVue, VueBootstrapTypeahead, VueSwal)
 Vue.config.productionTip = false;
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 

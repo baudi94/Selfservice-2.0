@@ -4,22 +4,22 @@
   <a v-b-modal.modal-1 ><img class="card-img-top" src="https://imageog.flaticon.com/icons/png/512/16/16036.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF" alt="Card image cap"></a>
   <div class="card-body">
     <h5 class="card-title">Check In</h5>
-    <p class="card-text">Falls Sie bereits zu einer Veranstaltung angemeldet sind, drücken Sie bitte hier.</p>
+    <p class="card-text">Falls Sie bereits zu einer Veranstaltung oder Termin angemeldet sind, drücken Sie bitte CheckIn um Ihren Besucherausweis zu drucken.</p>
     
   <div>
-  <b-button v-b-modal.modal-1>Anmelden</b-button>
+  <b-button v-b-modal.modal-1 class="btn btn-success" style="margin: 0 auto; display: block;">Check In</b-button>
 </div>
-  <b-modal id="modal-1" title="Anmelden" ref="modal1" :hide-footer="true">
+  <b-modal id="modal-1" title="CheckIn" ref="modal1" :hide-footer="true">
     <form>
   <div class="form-group">
-    <label for="userData.firstname">Vorname</label>
+    <label for="userData.firstname">Vorname*</label>
     <input v-bind:class="{ error: $v.userData.firstname.$error }" class="form-control" type="text" id="userData.firstname" v-model.trim="userData.firstname" placeholder="Vorname" @input="$v.userData.firstname.$touch()">
     <div v-if="$v.userData.firstname.$dirty">
       <p class="error-message" v-if="!$v.userData.firstname.required">  Dieses Feld bitte ausfüllen  </p>
     </div>
   </div>
   <div class="form-group">
-    <label for="userData.lastname">Nachname</label>
+    <label for="userData.lastname">Nachname*</label>
     <input v-bind:class="{ error: $v.userData.lastname.$error }" class="form-control" type="text" id="userData.lastname" v-model.trim="userData.lastname" placeholder="Nachname" @input="$v.userData.lastname.$touch()">
     <div v-if="$v.userData.lastname.$dirty">
       <p class="error-message" v-if="!$v.userData.lastname.required">    Dieses Feld bitte ausfüllen  </p>
@@ -27,8 +27,8 @@
   </div>
 
   <div class="form-group">
-    <label for="userData.organisation">Organisation</label>
-    <input v-bind:class="{ error: $v.userData.organisation.$error }" type="text" class="form-control" id="userData.organisation" v-model.trim="userData.organisation" placeholder="Organisation" @input="$v.userData.organisation.$touch()">
+    <label for="userData.organisation">Firma*</label>
+    <input v-bind:class="{ error: $v.userData.organisation.$error }" type="text" class="form-control" id="userData.organisation" v-model.trim="userData.organisation" placeholder="Firma" @input="$v.userData.organisation.$touch()">
     <div v-if="$v.userData.organisation.$dirty">
       <p class="error-message" v-if="!$v.userData.organisation.required">    Dieses Feld bitte ausfüllen  </p>
     </div>
@@ -46,10 +46,9 @@
 
 </template>
 <script>
-//import { required } from "vuelidate/lib/validators";
 import axios from 'axios';
 import { required } from "vuelidate/lib/validators";
-import swal from 'vue-sweetalert2';
+
 
 
 export default {
@@ -69,11 +68,19 @@ export default {
     },
     
     methods: {
+      
+      
         submitted(userData, answer, set){
+          
           if(userData.firstname === '' || userData.lastname === '' || userData.organisation === ''){
            console.log("Feld: " + userData.organisation)
-           alert("bitte alle Felder ausfüllen");
-                      
+           //alert("bitte alle Felder ausfüllen");
+                swal({
+                  title: "Hinweis!",
+                  text: "Bitte alle erforderlichen Felder ausfüllen um fortzufahren.",
+                  icon: "info",
+                  timer: 5000
+                });
          }
          else {
           axios.get("http://localhost:1080/belos.vrm/rest/selfservice/getstatus?firstname=" + userData.firstname + "&lastname=" + userData.lastname + "&organisation=" + userData.organisation,)
@@ -94,11 +101,13 @@ export default {
           this.answer = res.data
            if(this.answer != "registrated" || this.answer === null || this.answer === ""){
              alert("Sie sind schon eingecheckt, bitte begeben Sie sich zu dem auf Ihrem Ausweis ausgewiesenen Raum")
-             return;
+             window. location.reload()
+             
 
            }
            
          else {
+           
            axios.post("http://localhost:1080/belos.vrm/rest/selfservice/print?firstname=" + userData.firstname + "&lastname=" + userData.lastname + "&organisation=" + userData.organisation, {
             responseType: 'arraybuffer',
             headers: {
