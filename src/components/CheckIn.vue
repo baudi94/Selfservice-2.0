@@ -64,11 +64,18 @@ export default {
          
         },
         answer: '',
+        set: false,
       }
     },
     
     methods: {
-        submitted(userData, answer){
+        submitted(userData, answer, set){
+          if(userData.firstname === '' || userData.lastname === '' || userData.organisation === ''){
+           console.log("Feld: " + userData.organisation)
+           alert("bitte alle Felder ausfüllen");
+                      
+         }
+         else {
           axios.get("http://localhost:1080/belos.vrm/rest/selfservice/getstatus?firstname=" + userData.firstname + "&lastname=" + userData.lastname + "&organisation=" + userData.organisation,)
             .catch(function (error) {
               if (error.response) {
@@ -80,25 +87,19 @@ export default {
               alert("Keine Veranstaltung gefunden, bitte registrieren Sie sich.")
               window. location.reload()
             });
+         
          this.answer = axios.get("http://localhost:1080/belos.vrm/rest/selfservice/getstatus?firstname=" + userData.firstname + "&lastname=" + userData.lastname + "&organisation=" + userData.organisation, )
             .then((res) => {
           console.log("hier: " + res.data)
           this.answer = res.data
            if(this.answer != "registrated" || this.answer === null || this.answer === ""){
              alert("Sie sind schon eingecheckt, bitte begeben Sie sich zu dem auf Ihrem Ausweis ausgewiesenen Raum")
+             return;
 
            }
            
-        })
-           
-         if(userData.firstname === '' || userData.lastname === '' || userData.organisation === ''){
-           console.log("Feld: " + userData.organisation)
-           alert("bitte alle Felder ausfüllen");
-           window. location.reload()
-         }
-         
-          else{
-          axios.post("http://localhost:1080/belos.vrm/rest/selfservice/print?firstname=" + userData.firstname + "&lastname=" + userData.lastname + "&organisation=" + userData.organisation, {
+         else {
+           axios.post("http://localhost:1080/belos.vrm/rest/selfservice/print?firstname=" + userData.firstname + "&lastname=" + userData.lastname + "&organisation=" + userData.organisation, {
             responseType: 'arraybuffer',
             headers: {
               'Accept': 'application/pdf'
@@ -129,12 +130,20 @@ export default {
 
                
                 this.$refs.modal1.hide()
-
+                this.set = true;
                 alert("Vielen Dank, Bitte suchen Sie den Raum auf ihrem Besucherausweis auf.")
                 window. location.reload()
                         
-                })        
-          }
+                }) 
+         } 
+
+        })}
+           
+         
+         
+          
+                 
+          
         },
 
         

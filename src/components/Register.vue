@@ -171,11 +171,11 @@ export default {
       submitted(userData, users){
         if(userData.firstname === '' || userData.lastname === '' || userData.organisation === '' || userData.email === ''){
 
-           alert("bitte alle Felder ausfüllen")
+           alert("Bitte alle Felder ausfüllen")
          }
         
-           else if(this.reg.test(this.userData.email) === false){
-          alert('korrekte email eingeben')
+        else if(this.reg.test(this.userData.email) === false){
+          alert('Bitte eine korrekte E-mail Adresse eingeben')
         }
         else{
         this.$refs.modal3.show()
@@ -187,14 +187,14 @@ export default {
 
       submitted2(selectedUser, userData){
         if(selectedUser === null || selectedUser === '' || userData.reason === null){
-          alert("bitte alle Felder ausfüllen")
+          alert("Bitte alle Felder ausfüllen")
 
-          console.log("hier ist ein fehler")
+          //console.log("hier ist ein fehler")
         }
         else{
           this.$refs.modal3.hide()
           this.$refs.modal4.show()
-          console.log("hier ist kein fehler")
+          //console.log("hier ist kein fehler")
           return selectedUser
         }
         
@@ -203,12 +203,8 @@ export default {
       submitted3(selectedUser, status){
         console.log('status', this.status)
       if(this.status != 'accepted'){
-          //console.log(status)
-          //this.$swal({
-          //  icon: 'error',
-           // text: 'Bitte die Bedingungen akzeptieren'
-          //})
-          alert('falsch')
+          
+          alert('Bitte die Bedingungen akzeptieren')
         }
 
         else{
