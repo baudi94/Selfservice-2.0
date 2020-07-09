@@ -4,7 +4,7 @@
         <a v-b-modal.modal-2><img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTlGgXt0vzBAMcUcIG7HfBG7XDmZr3ASyxFHMFQpY16fhvvVADV" alt="Card image cap"></a>
         <div class="card-body">
           <h5 class="card-title">Besuch anmelden</h5>
-          <p class="card-text">Falls Sie noch bei keiner Veranstaltung hinterlegt sind, registrieren Sie sich bitte hier, um mit ihrem Ansprechpartner in Verbindung zu treten.</p>
+          <p class="card-text">Falls Sie noch bei keiner Veranstaltung hinterlegt sind, klicken Sie auf "Anmelden" um mit ihrem Ansprechpartner in Verbindung zu treten.</p>
         <b-button v-b-modal.modal-2 class="btn btn-success" style="margin: 0 auto; display: block;" @click.prevent="hidemodal2()">Anmelden</b-button>
       </div>
     </div>
@@ -119,8 +119,13 @@ Die Unterweisung muss an die Gefährdungsentwicklung angepasst sein und erforder
   
   </b-modal>
 
+  <b-modal id="modal-x" title="Anmelden" ref="modalx" :hide-footer="true">
 
+    <iframe src="youtube.de" name="theFrame" ></iframe>
+  
+  </b-modal>
   </div>
+  
 </template>
 <script>
 //import { required, email } from "vuelidate/lib/validators";
@@ -231,7 +236,12 @@ export default {
         else{
           this.$refs.modal4.hide()
           window.location.href = 'https://jabberguest.bechtle.com/call/'+ this.selectedUser.email
-          
+         // window.open('https://jabberguest.bechtle.com/call/'+ this.selectedUser.email, "theFrame");
+         //this.$refs.modalx.show().then(window.open('https://jabberguest.bechtle.com/call/'+ this.selectedUser.email, "theFrame"));
+
+         // this.$refs.modalx.show()
+         // window.open('https://jabberguest.bechtle.com/call/'+ this.selectedUser.email, "theFrame");
+         
         }
       },
       back1(){
@@ -285,5 +295,19 @@ export default {
 .error {
     border: 1px solid red;
   }
+.map-container{
+overflow:hidden;
+padding-bottom:56.25%;
+position:relative;
+height:0;
+}
+.map-container iframe{
+left:0;
+top:0;
+height:100%;
+width:100%;
+position:absolute;
+
+}
 
 </style>

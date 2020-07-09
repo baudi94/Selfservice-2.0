@@ -14,9 +14,10 @@ import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 //import VueNotifications from 'vue-notifications';
 import VueSweetalert2 from 'vue-sweetalert2';
 import VueSwal from 'vue-swal';
+Vue.config.productionTip = false
 
 
-Vue.use(Vuelidate, Axios, BootstrapVue, VueBootstrapTypeahead, VueSwal)
+Vue.use(Vuelidate, Axios, BootstrapVue, VueBootstrapTypeahead, VueSwal, VueSweetalert2)
 Vue.config.productionTip = false;
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 

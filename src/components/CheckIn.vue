@@ -4,13 +4,13 @@
   <a v-b-modal.modal-1 ><img class="card-img-top" src="https://imageog.flaticon.com/icons/png/512/16/16036.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF" alt="Card image cap"></a>
   <div class="card-body">
     <h5 class="card-title">Check In</h5>
-    <p class="card-text">Falls Sie bereits zu einer Veranstaltung oder Termin angemeldet sind, drücken Sie bitte CheckIn um Ihren Besucherausweis zu drucken.</p>
+    <p class="card-text">Falls Sie bereits zu einer Veranstaltung oder Termin angemeldet sind, drücken Sie bitte "Check In" um Ihren Besucherausweis zu drucken.</p>
     
   <div>
   <b-button v-b-modal.modal-1 class="btn btn-success" style="margin: 0 auto; display: block;">Check In</b-button>
 </div>
   <b-modal id="modal-1" title="CheckIn" ref="modal1" :hide-footer="true">
-    <form>
+    <form id="form1" ref="form1">
   <div class="form-group">
     <label for="userData.firstname">Vorname*</label>
     <input v-bind:class="{ error: $v.userData.firstname.$error }" class="form-control" type="text" id="userData.firstname" v-model.trim="userData.firstname" placeholder="Vorname" @input="$v.userData.firstname.$touch()">
@@ -106,13 +106,16 @@ export default {
           this.answer = res.data
            if(this.answer != "registrated" || this.answer === null || this.answer === ""){
              swal({
-                  title: "Hinweis!",
-                  text: "Sie sind bereits eingecheckt, bitte begeben Sie sich zu dem auf Ihrem Ausweis ausgewiesenen Raum.",
-                  icon: "info",
-                  timer: 5000
+                  title: "Sie sind bereits eingecheckt!",
+                  text: 'Scannen Sie den QR-Code um sich den Raumplan anzusehen und begeben Sie sich zu dem auf Ihrem Besucherausweis ausgewiesenem Raum.',
+                  icon: 'https://i.ibb.co/mXVgT0Y/qr-code.png',
+                  timer: 25000
+                }).then(function(){ 
+                   location.reload();
                 });
                 
-             window. location.reload()
+             //
+             
              
            }
            
@@ -151,13 +154,15 @@ export default {
                 this.$refs.modal1.hide()
                 this.set = true;
                 swal({
-                  title: "Hinweis!",
-                  text: "Vielen Dank, Bitte suchen Sie den Raum auf ihrem Besucherausweis auf.",
-                  icon: "info",
-                  timer: 5000
+                  title: "Sie sind eingecheckt!",
+                  text: 'Scannen Sie den QR-Code um sich den Raumplan anzusehen und begeben Sie sich zu dem auf Ihrem Besucherausweis ausgewiesenem Raum.',
+                  icon: 'https://i.ibb.co/mXVgT0Y/qr-code.png',
+                  timer: 25000
+                }).then(function(){ 
+                   location.reload();
                 });
                
-                window. location.reload()
+                
                         
                 }) 
          } 
@@ -218,4 +223,5 @@ export default {
 .error {
     border: 1px solid red;
   }
-</style>
+
+ </style>
