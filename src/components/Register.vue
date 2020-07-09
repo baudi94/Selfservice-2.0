@@ -5,7 +5,7 @@
         <div class="card-body">
           <h5 class="card-title">Besuch anmelden</h5>
           <p class="card-text">Falls Sie noch bei keiner Veranstaltung hinterlegt sind, registrieren Sie sich bitte hier, um mit ihrem Ansprechpartner in Verbindung zu treten.</p>
-        <b-button v-b-modal.modal-2 class="btn btn-success" style="margin: 0 auto; display: block;">Anmelden</b-button>
+        <b-button v-b-modal.modal-2 class="btn btn-success" style="margin: 0 auto; display: block;" @click.prevent="hidemodal2()">Anmelden</b-button>
       </div>
     </div>
 
@@ -30,7 +30,7 @@
 
       <div class="form-group">
         <label for="userData.organisation">Firma</label>
-        <input  type="text" class="form-control" id="userData.organisation" v-model.trim="userData.organisation" placeholder="Firma" @input="$v.userData.organisation.$touch()">
+        <input  type="text" class="form-control" id="userData.organisation" v-model.trim="userData.organisation" placeholder="Firma">
         
       </div>
 
@@ -66,7 +66,7 @@
         </div>
         </div>
         <div>
-          <label for="users1">Ansprechpartner mit dem Sie in Kontakt treten möchten* <img src="https://wiki.jat-online.de/lib/exe/fetch.php?cache=&media=emoticons:lupe.png" width="30" height="30"></label>
+          <label for="users1">Ansprechpartner mit dem Sie in Kontakt treten möchten* <img src="https://i.ibb.co/bR2PNVh/lupe.png" width="30" height="30"></label>
             <vue-bootstrap-typeahead
               class="mb-4"
               v-model="query"
@@ -164,6 +164,11 @@ export default {
     }
   },
     methods: {
+      hidemodal2(){
+        setTimeout(() => {
+          this.$refs.modal2.hide();
+        }, 5000);
+      },
       submitted(userData, users, selectedUser){
         if(userData.firstname === '' || userData.lastname === '' || userData.email === ''){
 

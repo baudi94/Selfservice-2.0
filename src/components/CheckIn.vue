@@ -91,7 +91,12 @@ export default {
                
               } 
               
-              alert("Keine Veranstaltung gefunden, bitte registrieren Sie sich.")
+              swal({
+                  title: "Hinweis!",
+                  text: "Keine Veranstaltung gefunden, melden Sie sich bitte an.",
+                  icon: "info",
+                  timer: 5000
+                });
               window. location.reload()
             });
          
@@ -100,10 +105,15 @@ export default {
           console.log("hier: " + res.data)
           this.answer = res.data
            if(this.answer != "registrated" || this.answer === null || this.answer === ""){
-             alert("Sie sind schon eingecheckt, bitte begeben Sie sich zu dem auf Ihrem Ausweis ausgewiesenen Raum")
+             swal({
+                  title: "Hinweis!",
+                  text: "Sie sind bereits eingecheckt, bitte begeben Sie sich zu dem auf Ihrem Ausweis ausgewiesenen Raum.",
+                  icon: "info",
+                  timer: 5000
+                });
+                
              window. location.reload()
              
-
            }
            
          else {
@@ -140,7 +150,13 @@ export default {
                
                 this.$refs.modal1.hide()
                 this.set = true;
-                alert("Vielen Dank, Bitte suchen Sie den Raum auf ihrem Besucherausweis auf.")
+                swal({
+                  title: "Hinweis!",
+                  text: "Vielen Dank, Bitte suchen Sie den Raum auf ihrem Besucherausweis auf.",
+                  icon: "info",
+                  timer: 5000
+                });
+               
                 window. location.reload()
                         
                 }) 
