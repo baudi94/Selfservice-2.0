@@ -121,7 +121,7 @@ Die Unterweisung muss an die Gefährdungsentwicklung angepasst sein und erforder
 <b-modal id="modalx" ref="modalx" :hide-footer="true" :static=true size="xl">
 
   
-    <iframe id="jabber" ref="jabber" src="" width="1100" height="600" style="border:0px solid black;">
+    <iframe id="jabber" ref="jabber" src="" width="100%" height="700" style="border:0px solid black;">
     </iframe>  
  
   </b-modal>
@@ -239,19 +239,13 @@ export default {
 
         else{
           this.$refs.modal4.hide()
-         // window.location.href = 'https://jabberguest.bechtle.com/call/'+ this.selectedUser.email
-         // window.open('https://jabberguest.bechtle.com/call/'+ this.selectedUser.email, "theFrame");
-         //this.$refs.modalx.show().then(window.open('https://jabberguest.bechtle.com/call/'+ this.selectedUser.email, "theFrame"));
-        var loc = "https://jabberguest.bechtle.com/call/" + this.selectedUser.email
+         
+         var loc = "https://jabberguest.bechtle.com/call/daniel.bauer@bechtle.com" + this.selectedUser.email + "?widget=true"
          this.$refs.modalx.show()
-         
-         
+                 
          this.$refs.jabber.src = loc;
          console.log(this.$refs.jabber.src)
-          //window.open('https://jabberguest.bechtle.com/call/'+ this.selectedUser.email, "jabber");
-           
           
-           
         }
       },
       back1(){
@@ -264,24 +258,7 @@ export default {
         this.$refs.modal3.show()
       },
 
-      callEventHandler(eve){
-         var callEvent;
-         if (eve.origin === 'https://jabberguest.bechtle.com/') {
-            if (JSON) {
-                if (typeof eve.data === 'string') {
-                    callEvent = JSON.parse(eve.data);
-                    console.log('Received ' + callEvent.event + ' from ' + eve.origin);
-                    // PUT YOUR CUSTOM CODE HERE
-                    // callEvent.event is the event: CALLSTARTED or CALLENDED
-                }
-            } else {
-                console.log('Received event but no JSON parser is defined. Add &lt;!DOCTYPE html&gt; or include a third party JSON parsing library.');
-            } 
-        } else if (onmessageHandler) {
-            // Pass event off to a previous message handler
-            onmessageHandler(eve);
-        }
-      }
+     
       
     },
      validations: {
