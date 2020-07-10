@@ -118,11 +118,18 @@ Die Unterweisung muss an die Gefährdungsentwicklung angepasst sein und erforder
   <button type="submit" class="btn btn-success"  @click.prevent="submitted3()">Ansprechpartner anrufen</button>
   
   </b-modal>
-<b-modal id="modalx" ref="modalx" :hide-footer="true" :static=true size="xl">
 
-  
+
+
+
+<b-modal id="modalx" ref="modalx" title="Call" :hide-footer="true" :static=true size="xl">
+    
+
     <iframe id="jabber" ref="jabber" src="" width="100%" height="600" style="border:0px solid black;">
     </iframe>  
+    <hr>
+    <p style="text-align:center;">Ihr Telefonat ist beendet? Klicken Sie bitte auf "Vorgang beenden".</p>
+    <button type="submit" class="btn btn-danger"  style="margin: 0 auto; display: block;" @click.prevent="refresh()">Vorgang beenden</button>
  
   </b-modal>
 
@@ -245,9 +252,19 @@ export default {
                  
          this.$refs.jabber.src = loc;
          console.log(this.$refs.jabber.src)
+         swal({
+                  title: "Hinweis!",
+                  text: "Klicken Sie Anruf um das Gespräch zu starten",
+                  icon: "info",
+                  timer: 5000
+                });
           
         }
       },
+      refresh(){
+        location.reload()
+      },
+
       back1(){
         this.$refs.modal3.hide()
         this.$refs.modal2.show()
