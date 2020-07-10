@@ -121,7 +121,7 @@ Die Unterweisung muss an die Gefährdungsentwicklung angepasst sein und erforder
 <b-modal id="modalx" ref="modalx" :hide-footer="true" :static=true size="xl">
 
   
-    <iframe id="jabber" ref="jabber" src="" width="100%" height="700" style="border:0px solid black;">
+    <iframe id="jabber" ref="jabber" src="" width="100%" height="600" style="border:0px solid black;">
     </iframe>  
  
   </b-modal>
@@ -240,7 +240,7 @@ export default {
         else{
           this.$refs.modal4.hide()
          
-         var loc = "https://jabberguest.bechtle.com/call/daniel.bauer@bechtle.com" + this.selectedUser.email + "?widget=true"
+         var loc = "https://jabberguest.bechtle.com/call/" + this.selectedUser.email + "?widget=true"
          this.$refs.modalx.show()
                  
          this.$refs.jabber.src = loc;
