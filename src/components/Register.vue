@@ -164,12 +164,12 @@ export default {
 
       }
     },
-    watch: {
+  watch: {
     // When the query value changes, fetch new results from
      query(newQuery) {
       axios.get(`http://localhost:1080/belos.vrm/rest/selfservice/usersquery?name=${newQuery}`)
         .then((res) => {
-          console.log(res.data)
+         // console.log(res.data)
           this.users = res.data
         })
     }
@@ -309,6 +309,7 @@ export default {
     width: 100%;
     height: 16.7vw;
     object-fit: contain;
+    padding-top:50px;
 }  
 
 .error-message {

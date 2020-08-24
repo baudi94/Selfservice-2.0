@@ -1,7 +1,7 @@
 <template>
    
     <div class="card" style="width: 25rem;">
-  <a v-b-modal.modal-1 ><img class="card-img-top" src="https://imageog.flaticon.com/icons/png/512/16/16036.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF" alt="Card image cap"></a>
+  <a v-b-modal.modal-1 ><img class="card-img-top" src="https://i.imgur.com/xeLYOMd.png" alt="Card image cap"></a>
   <div class="card-body">
     <h5 class="card-title">Check In</h5>
     <p class="card-text">Falls Sie bereits zu einer Veranstaltung oder Termin angemeldet sind, drücken Sie bitte "Check In" um Ihren Besucherausweis zu drucken.</p>
@@ -210,11 +210,12 @@ export default {
     flex-direction:column;
 }
 .card-img-top {
-    width: 100%;
+    width: 80%;
     height: 16.7vw;
-    object-fit: cover;
-    
-}
+    object-fit: contain;
+    padding-top:50px;
+}  
+
 
  .error-message {
    color: red;

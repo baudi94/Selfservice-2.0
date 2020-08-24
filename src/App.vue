@@ -4,21 +4,15 @@
     <v-content>
       <v-container fill-height>
         <v-row justify="center" align="center">
-          
-          
-               
             <CheckIn/>
-                  
-          
-                       
             <Register/>
-           
         </v-row>
       </v-container>
-
     </v-content>
   </v-app>
 </template>
+
+
 
 <script>
 //import HelloWorld from './components/HelloWorld';
