@@ -1,7 +1,7 @@
 <template>
    
     <div class="card" style="width: 25rem;">
-  <a v-b-modal.modal-1 ><img class="card-img-top" src="https://i.imgur.com/xeLYOMd.png" alt="Card image cap"></a>
+  <a v-b-modal.modal-1 ><img class="card-img-top" src="@/assets/checkin.png" alt="Card image cap"></a>
   <div class="card-body">
     <h5 class="card-title">Check In</h5>
     <p class="card-text">Falls Sie bereits zu einer Veranstaltung oder Termin angemeldet sind, drücken Sie bitte "Check In" um Ihren Besucherausweis zu drucken.</p>
@@ -9,7 +9,10 @@
   <div>
   <b-button v-b-modal.modal-1 class="btn btn-success" style="margin: 0 auto; display: block;">Check In</b-button>
 </div>
-  <b-modal id="modal-1" title="CheckIn" ref="modal1" :hide-footer="true">
+
+
+
+  <b-modal id="modal-1" title="CheckIn" ref="modal1" centered class="modal-dialog modal-dialog-centered" :hide-footer="true">
     <form id="form1" ref="form1">
   <div class="form-group">
     <label for="userData.firstname">Vorname*</label>
@@ -108,7 +111,7 @@ export default {
              swal({
                   title: "Sie sind bereits eingecheckt!",
                   text: 'Scannen Sie den QR-Code um sich den Raumplan anzusehen und begeben Sie sich zu dem auf Ihrem Besucherausweis ausgewiesenem Raum.',
-                  icon: 'https://i.ibb.co/mXVgT0Y/qr-code.png',
+                  icon: '@/assets/qr-code.png',
                   timer: 25000
                 }).then(function(){ 
                    location.reload();

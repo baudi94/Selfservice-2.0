@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="card" style="width: 25rem;">
-        <a v-b-modal.modal-2><img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTlGgXt0vzBAMcUcIG7HfBG7XDmZr3ASyxFHMFQpY16fhvvVADV" alt="Card image cap"></a>
+        <a v-b-modal.modal-2><img class="card-img-top" src="@/assets/images.png" alt="Card image cap"></a>
         <div class="card-body">
           <h5 class="card-title">Besuch anmelden</h5>
           <p class="card-text">Falls Sie noch bei keiner Veranstaltung hinterlegt sind, klicken Sie auf "Anmelden" um mit ihrem Ansprechpartner in Verbindung zu treten.</p>
@@ -10,7 +10,7 @@
     </div>
 
 
-    <b-modal id="modal-3" title="Anmelden" ref="modal3" :hide-footer="true">
+    <b-modal id="modal-3" title="Anmelden" centered ref="modal3" :hide-footer="true">
       <form>
         <div class="form-group">
           <label for="userData.firstname">Vorname*</label>
@@ -53,7 +53,7 @@
   </b-modal>
   
 <!-- 2. Modal -->
-  <b-modal id="modal-2" title="Anmelden" ref="modal2" :hide-footer="true">
+  <b-modal id="modal-2" title="Anmelden" centered ref="modal2" :hide-footer="true">
         <form>
         <div class="form-group">
         <label for="userData.reason">Grund des Besuchs*</label>
@@ -66,7 +66,7 @@
         </div>
         </div>
         <div>
-          <label for="users1">Ansprechpartner mit dem Sie in Kontakt treten möchten* <img src="https://i.ibb.co/bR2PNVh/lupe.png" width="30" height="30"></label>
+          <label for="users1">Ansprechpartner mit dem Sie in Kontakt treten möchten* <img src="@/assets/lupe.png" width="30" height="30"></label>
             <vue-bootstrap-typeahead
               class="mb-4"
               v-model="query"
@@ -90,7 +90,7 @@
   </b-modal>
 
 
-  <b-modal id="modal-4" title="Anmelden" ref="modal4" :hide-footer="true">
+  <b-modal id="modal-4" title="Anmelden" centered ref="modal4" :hide-footer="true">
    
     <div class="form-group">
    <h5><label for="contact">Sicherheitsunterweisung</label></h5>
@@ -122,7 +122,7 @@ Die Unterweisung muss an die Gefährdungsentwicklung angepasst sein und erforder
 
 
 
-<b-modal id="modalx" ref="modalx" title="Call" :hide-footer="true" :static=true size="xl">
+<b-modal id="modalx" ref="modalx" centered  title="Call" :hide-footer="true" :static=true size="xl">
     
 
     <iframe id="jabber" ref="jabber" src="" width="100%" height="600" style="border:0px solid black;">
@@ -165,7 +165,7 @@ export default {
       }
     },
   watch: {
-    // When the query value changes, fetch new results from
+    // Sobald sich die Eingabe verändert werden die neuen Ergebnisse geladen
      query(newQuery) {
       axios.get(`http://localhost:1080/belos.vrm/rest/selfservice/usersquery?name=${newQuery}`)
         .then((res) => {
@@ -180,11 +180,11 @@ export default {
     }
   },
     methods: {
-      hidemodal2(){
-        setTimeout(() => {
-          this.$refs.modal2.hide();
-        }, 5000);
-      },
+     // hidemodal2(){
+      //  setTimeout(() => {
+      //    this.$refs.modal2.hide();
+     //   }, 5000);
+     // },
       submitted(userData, users, selectedUser){
         if(userData.firstname === '' || userData.lastname === '' || userData.email === ''){
 
@@ -333,5 +333,7 @@ width:100%;
 position:absolute;
 
 }
+
+
 
 </style>
