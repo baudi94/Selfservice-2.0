@@ -14,34 +14,34 @@
 
   <b-modal id="modal-1" title="CheckIn" ref="modal1" centered class="modal-dialog modal-dialog-centered" :hide-footer="true">
     <form id="form1" ref="form1">
-  <div class="form-group">
-    <label for="userData.firstname">Vorname*</label>
-    <input v-bind:class="{ error: $v.userData.firstname.$error }" class="form-control" type="text" id="userData.firstname" v-model.trim="userData.firstname" placeholder="Vorname" @input="$v.userData.firstname.$touch()">
-    <div v-if="$v.userData.firstname.$dirty">
-      <p class="error-message" v-if="!$v.userData.firstname.required">  Dieses Feld bitte ausfüllen  </p>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="userData.lastname">Nachname*</label>
-    <input v-bind:class="{ error: $v.userData.lastname.$error }" class="form-control" type="text" id="userData.lastname" v-model.trim="userData.lastname" placeholder="Nachname" @input="$v.userData.lastname.$touch()">
-    <div v-if="$v.userData.lastname.$dirty">
-      <p class="error-message" v-if="!$v.userData.lastname.required">    Dieses Feld bitte ausfüllen  </p>
-    </div>
-  </div>
+      <div class="form-group">
+        <label for="userData.firstname">Vorname*</label>
+        <input v-bind:class="{ error: $v.userData.firstname.$error }" class="form-control" type="text" id="userData.firstname" 
+        v-model.trim="userData.firstname" placeholder="Vorname" @input="$v.userData.firstname.$touch()">
+        <div v-if="$v.userData.firstname.$dirty">
+          <p class="error-message" v-if="!$v.userData.firstname.required">  Dieses Feld bitte ausfüllen  </p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="userData.lastname">Nachname*</label>
+        <input v-bind:class="{ error: $v.userData.lastname.$error }" class="form-control" type="text" id="userData.lastname" 
+        v-model.trim="userData.lastname" placeholder="Nachname" @input="$v.userData.lastname.$touch()">
+        <div v-if="$v.userData.lastname.$dirty">
+          <p class="error-message" v-if="!$v.userData.lastname.required">  Dieses Feld bitte ausfüllen  </p>
+        </div>
+      </div>
 
-  <div class="form-group">
-    <label for="userData.organisation">Firma*</label>
-    <input v-bind:class="{ error: $v.userData.organisation.$error }" type="text" class="form-control" id="userData.organisation" v-model.trim="userData.organisation" placeholder="Firma" @input="$v.userData.organisation.$touch()">
-    <div v-if="$v.userData.organisation.$dirty">
-      <p class="error-message" v-if="!$v.userData.organisation.required">    Dieses Feld bitte ausfüllen  </p>
-    </div>
-  </div>
-  <div class="validators">
- 
-</div>
-  
-  <button type="submit" class="btn btn-success"  @click.prevent="submitted(userData)">Weiter</button>
-</form>
+      <div class="form-group">
+        <label for="userData.organisation">Firma*</label>
+        <input v-bind:class="{ error: $v.userData.organisation.$error }" type="text" class="form-control" id="userData.organisation" 
+        v-model.trim="userData.organisation" placeholder="Firma" @input="$v.userData.organisation.$touch()">
+        <div v-if="$v.userData.organisation.$dirty">
+          <p class="error-message" v-if="!$v.userData.organisation.required">    Dieses Feld bitte ausfüllen  </p>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn btn-success"  @click.prevent="submitted(userData)">Weiter</button>
+    </form>
   </b-modal>
 </div>
 </div>
@@ -100,7 +100,7 @@ export default {
                   icon: "info",
                   timer: 5000
                 });
-              window. location.reload()
+              location.reload()
             });
          
          this.answer = axios.get("http://localhost:1080/belos.vrm/rest/selfservice/getstatus?firstname=" + userData.firstname + "&lastname=" + userData.lastname + "&organisation=" + userData.organisation, )
@@ -111,7 +111,7 @@ export default {
              swal({
                   title: "Sie sind bereits eingecheckt!",
                   text: 'Scannen Sie den QR-Code um sich den Raumplan anzusehen und begeben Sie sich zu dem auf Ihrem Besucherausweis ausgewiesenem Raum.',
-                  icon: '@/assets/qr-code.png',
+                  icon: "https://i.ibb.co/7vHKn5M/qrcode.png",
                   timer: 25000
                 }).then(function(){ 
                    location.reload();
@@ -159,7 +159,7 @@ export default {
                 swal({
                   title: "Sie sind eingecheckt!",
                   text: 'Scannen Sie den QR-Code um sich den Raumplan anzusehen und begeben Sie sich zu dem auf Ihrem Besucherausweis ausgewiesenem Raum.',
-                  icon: 'https://i.ibb.co/mXVgT0Y/qr-code.png',
+                  icon: "https://i.ibb.co/7vHKn5M/qrcode.png",
                   timer: 25000
                 }).then(function(){ 
                    location.reload();
